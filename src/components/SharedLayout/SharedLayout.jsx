@@ -1,24 +1,23 @@
 
-import { Link, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import { Suspense } from 'react';
 
-export function SharedLayout () {
+import { useAuth } from 'redux/useAuth';
+import { Navigation } from 'components/Navigation/Navigation';
+import { UserMenu } from 'components/UserMenu/UserMenu';
+
+export function SharedLayout() {
+
+    const {isLoggedIn} = useAuth();
+
     return (
         <>
-        <header >
-            <nav>
-            <Link to="/login">Login</Link>
-            <Link to="/register">Register</Link>
-            <Link to="/contacts">Contacts</Link>
-                </nav>
-            <div>
-            <p>mango@mail.com</p>
-            <button>Logout</button>
-            </div>
-        </header>
-            <main>
-                <Outlet/>
-        </main>
-            
-
+            <header >
+               <Navigation/>
+                {isLoggedIn && <UserMenu/>}
+            </header>
+            <Suspense fallback={<div>Loading page...</div>}>
+                <Outlet />
+            </Suspense>
         </>);
 }

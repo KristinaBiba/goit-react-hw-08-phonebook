@@ -36,7 +36,7 @@ export function ContactForm () {
     const normalizeNewContactName = contactName.value.toLowerCase();
 
     contacts.find(contact => contact.name.toLowerCase() === normalizeNewContactName) ? alert(`${contactName.value} is already incontacts`) :
-    dispatch(addContact({name: contactName.value, phone: contactNumber.value}));
+    dispatch(addContact({name: contactName.value, number: contactNumber.value}));
 
     setContactName('');
     setContactNumber('');

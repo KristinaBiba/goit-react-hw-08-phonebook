@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { deleteContact } from 'redux/operations';
 
-export const ContactInfo = ({ id, name, phone }) => {
+export const ContactInfo = ({ id, name, number }) => {
 
       const dispatch = useDispatch();
 
@@ -14,7 +14,7 @@ export const ContactInfo = ({ id, name, phone }) => {
       return (
         <>
           <Li>    
-            <P>{name}: {phone}</P>
+            <P>{name}: {number}</P>
             <Button onClick={() => { onDeliteContact(id) }}>Delite</Button>  
           </Li>
         </>)
@@ -22,5 +22,5 @@ export const ContactInfo = ({ id, name, phone }) => {
 ContactInfo.propTypes = {
     id: PropTypes.string,
     name: PropTypes.string,
-    phone: PropTypes.string,
+    number: PropTypes.string,
 }
