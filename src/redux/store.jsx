@@ -9,10 +9,10 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import { contactsReducer } from 'redux/contactsSlice';
-import { filterReducer } from 'redux/filterSlice';
+import { contactsReducer } from 'redux/Contacts/contactsSlice';
+import { filterReducer } from 'redux/Contacts/filterSlice';
 import storage from 'redux-persist/lib/storage';
-import { authReducer } from './authSlice';
+import { authReducer } from './Auth/authSlice';
 
 const middleware = [
   ...getDefaultMiddleware({

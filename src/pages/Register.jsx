@@ -1,7 +1,13 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Label, Input, Button } from "../components/ContactForm/ContactForm_css";
-import { register } from 'redux/authOperations';
+import { register } from 'redux/Auth/authOperations';
+
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import { Container } from '@mui/material';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 
 function Register() {
   const [userName, setUserName] = useState('');
@@ -10,16 +16,16 @@ function Register() {
 
   const dispatch = useDispatch();
 
-  const handleChange = (e) => {
-    const {name, value } = e.target;
+  const handleChange = e => {
+    const { name, value } = e.target;
     switch (name) {
-      case ('userName'):
+      case 'userName':
         setUserName(value);
         break;
-      case ('userEmail'):
+      case 'userEmail':
         setUserEmail(value);
         break;
-      case ('userPassword'):
+      case 'userPassword':
         setUserPassword(value);
         break;
       default:
@@ -27,56 +33,92 @@ function Register() {
         setUserEmail('');
         setUserPassword('');
         break;
-    }    
-  }
+    }
+  };
 
-  const handleRegister = (e) => {
+  const handleRegister = e => {
     e.preventDefault();
 
     const { userName, userEmail, userPassword } = e.currentTarget.elements;
 
-    // const normalizeNewContactName = userName.value.toLowerCase();
+    dispatch(
+      register({
+        name: userName.value,
+        email: userEmail.value,
+        password: userPassword.value,
+      })
+    );
 
-    // contacts.find(contact => contact.name.toLowerCase() === normalizeNewContactName) ? alert(`${contactName.value} is already incontacts`) :
-    dispatch(register({name: userName.value, email: userEmail.value, password: userPassword.value,}));
+    setUserName('');
+    setUserEmail('');
+    setUserPassword('');
+  };
 
-        setUserName('');
-        setUserEmail('');
-        setUserPassword('');
-  }
+  return (
+    <Container maxWidth="xl">
+      <Card
+        sx={{ maxWidth: 375 }}
+        style={{ marginRight: 'auto', marginLeft: 'auto', marginTop: 24 }}
+      >
+        <CardContent>
+          <Box
+            component="form"
+            sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}
+            noValidate
+            autoComplete="off"
+            onSubmit={handleRegister}
+          >
+            <div>
+              <TextField
+                required
+                label="Name"
+                autoComplete="on"
+                type="text"
+                name="userName"
+                onChange={handleChange}
+                value={userName}
+                pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+                title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+                style={{ width: '38ch' }}
+              />
+              <TextField
+                required
+                label="Email"
+                autoComplete="on"
+                type="email"
+                name="userEmail"
+                onChange={handleChange}
+                value={userEmail}
+                title="Email must be digits, letters and contain @"
+                style={{ width: '38ch' }}
+              />
+              <TextField
+                required
+                label="Password"
+                autoComplete="current-password"
+                type="password"
+                name="userPassword"
+                onChange={handleChange}
+                value={userPassword}
+                pattern="/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}/g"
+                title="Password must contain letters and numbers"
+                style={{ width: '38ch' }}
+              />
+            </div>
 
-    return (
-      <form onSubmit={handleRegister} >
-        <Label>Name <Input
-          type="text"
-          name="userName"
-          onChange={handleChange}
-          value={userName}
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          required
-        /></Label>
-        <Label>Email <Input
-          type="email"
-          name="userEmail"
-          onChange={handleChange}
-          value={userEmail}
-          
-          title="Email must be digits, letters and contain @"
-          required
-        /></Label>
-        <Label>Password <Input
-          type="text"
-          name="userPassword"
-          onChange={handleChange}
-          value={userPassword}
-        //   pattern="/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}/g"
-          title="Password must contain letters and numbers"
-          required
-        /></Label>
-            
-        <Button type="submit" text="Register">Register</Button>
-      </form>)
+            <Button
+              size="small"
+              type="submit"
+              text="Register"
+              style={{ marginLeft: '8px' }}
+            >
+              Register
+            </Button>
+          </Box>
+        </CardContent>
+      </Card>
+    </Container>
+  );
 }
-  
+
 export default Register;

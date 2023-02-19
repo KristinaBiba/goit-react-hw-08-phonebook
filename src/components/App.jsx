@@ -1,8 +1,8 @@
 import { lazy, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { SharedLayout } from "components/SharedLayout/SharedLayout";
-import { useAuth } from "redux/useAuth";
-import { refreshUser } from "redux/authOperations";
+import { useAuth } from "redux/Auth/useAuth";
+import { refreshUser } from "redux/Auth/authOperations";
 import { useDispatch } from "react-redux";
 import { RestrictedRoute } from "./RestrictedRoute";
 import { PrivateRoute } from "./PrivateRoute";

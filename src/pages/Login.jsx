@@ -1,7 +1,13 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Label, Input, Button } from "../components/ContactForm/ContactForm_css";
-import { logIn } from 'redux/authOperations';
+import { logIn } from 'redux/Auth/authOperations';
+
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import { Container } from '@mui/material';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 
 function Login() {
   const [userEmail, setUserEmail] = useState('');
@@ -9,59 +15,86 @@ function Login() {
 
   const dispatch = useDispatch();
 
-  const handleChange = (e) => {
-    const {name, value } = e.target;
+  const handleChange = e => {
+    const { name, value } = e.target;
     switch (name) {
-      case ('userEmail'):
+      case 'userEmail':
         setUserEmail(value);
         break;
-      case ('userPassword'):
+      case 'userPassword':
         setUserPassword(value);
         break;
       default:
         setUserEmail('');
         setUserPassword('');
         break;
-    }    
-  }
+    }
+  };
 
-  const handleLogIn = (e) => {
+  const handleLogIn = e => {
     e.preventDefault();
 
     const { userEmail, userPassword } = e.currentTarget.elements;
 
-    // const normalizeNewContactName = userName.value.toLowerCase();
+    dispatch(logIn({ email: userEmail.value, password: userPassword.value }));
 
-    // contacts.find(contact => contact.name.toLowerCase() === normalizeNewContactName) ? alert(`${contactName.value} is already incontacts`) :
-    dispatch(logIn({email: userEmail.value, password: userPassword.value,}));
+    setUserEmail('');
+    setUserPassword('');
+  };
 
-        setUserEmail('');
-        setUserPassword('');
-  }
+  return (
+    <Container maxWidth="xl">
+      <Card
+        sx={{ maxWidth: 375 }}
+        style={{ marginRight: 'auto', marginLeft: 'auto', marginTop: 24 }}
+      >
+        <CardContent>
+          <Box
+            component="form"
+            sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}
+            noValidate
+            autoComplete="off"
+            onSubmit={handleLogIn}
+          >
+            <div>
+              <TextField
+                required
+                label="Email"
+                autoComplete="on"
+                type="email"
+                name="userEmail"
+                onChange={handleChange}
+                value={userEmail}
+                title="Email must be digits, letters and contain @"
+                style={{ width: '38ch' }}
+              />
+              <TextField
+                required
+                label="Password"
+                autoComplete="current-password"
+                type="password"
+                name="userPassword"
+                onChange={handleChange}
+                value={userPassword}
+                pattern="/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}/g"
+                title="Password must contain letters and numbers"
+                style={{ width: '38ch' }}
+              />
+            </div>
 
-    return (
-      <form onSubmit={handleLogIn} >
-        <Label>Email <Input
-          type="email"
-          name="userEmail"
-          onChange={handleChange}
-          value={userEmail}
-          
-          title="Email must be digits, letters and contain @"
-          required
-        /></Label>
-        <Label>Password <Input
-          type="text"
-          name="userPassword"
-          onChange={handleChange}
-          value={userPassword}
-        //   pattern="/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{7,}/g"
-          title="Password must contain letters and numbers"
-          required
-        /></Label>
-            
-        <Button type="submit" text="LogIn">Log In</Button>
-      </form>)
+            <Button
+              size="small"
+              type="submit"
+              text="LogIn"
+              style={{ marginLeft: '8px' }}
+            >
+              Log In
+            </Button>
+          </Box>
+        </CardContent>
+      </Card>
+    </Container>
+  );
 }
-  
+
 export default Login;
