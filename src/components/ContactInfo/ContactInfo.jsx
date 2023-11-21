@@ -15,7 +15,7 @@ import Grid from '@mui/material/Grid';
 import PhoneIcon from '@mui/icons-material/Phone';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-export const ContactInfo = ({ id, name, number }) => {
+export const ContactInfo = ({ id, name, phone }) => {
   const dispatch = useDispatch();
 
   const onDeliteContact = id => {
@@ -51,7 +51,7 @@ export const ContactInfo = ({ id, name, number }) => {
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText>
-                  {name}: {number}
+                  {name}: {phone}
                 </ListItemText>
               </ListItem>
             </List>
