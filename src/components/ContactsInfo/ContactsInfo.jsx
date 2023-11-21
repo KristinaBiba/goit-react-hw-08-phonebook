@@ -18,6 +18,6 @@ export const ContactsInfo = () => {
       return (
           <Ul>
                   {filtredContacts.map(( contact ) => (
-                        <ContactInfo key = {contact.id} {...contact}/>))}
+                        <ContactInfo key = {contact._id} {...contact}/>))}
           </Ul>)
 };

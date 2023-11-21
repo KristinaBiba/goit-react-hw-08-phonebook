@@ -15,11 +15,11 @@ import Grid from '@mui/material/Grid';
 import PhoneIcon from '@mui/icons-material/Phone';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-export const ContactInfo = ({ id, name, phone }) => {
+export const ContactInfo = ({ _id, name, phone }) => {
   const dispatch = useDispatch();
 
-  const onDeliteContact = id => {
-    dispatch(deleteContact(id));
+  const onDeliteContact = _id => {
+    dispatch(deleteContact(_id));
   };
 
   const Demo = styled('div')(({ theme }) => ({
@@ -38,7 +38,7 @@ export const ContactInfo = ({ id, name, phone }) => {
                     edge="end"
                     aria-label="delete"
                     onClick={() => {
-                      onDeliteContact(id);
+                      onDeliteContact(_id);
                     }}
                   >
                     <DeleteIcon />

@@ -9,7 +9,7 @@ import TextField from '@mui/material/TextField';
 
 export function ContactForm({ toggleModal }) {
   const [contactName, setContactName] = useState('');
-  const [contactNumber, setContactNumber] = useState('');
+  const [contactPhone, setContactPhone] = useState('');
 
   const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
@@ -20,12 +20,12 @@ export function ContactForm({ toggleModal }) {
       case 'contactName':
         setContactName(value);
         break;
-      case 'contactNumber':
-        setContactNumber(value);
+      case 'contactPhone':
+        setContactPhone(value);
         break;
       default:
         setContactName('');
-        setContactNumber('');
+        setContactPhone('');
         break;
     }
   };
@@ -33,20 +33,22 @@ export function ContactForm({ toggleModal }) {
   const handleAddContact = e => {
     e.preventDefault();
 
-    const { contactName, contactNumber } = e.currentTarget.elements;
+    const { contactName, contactPhone } = e.currentTarget.elements;
 
     const normalizeNewContactName = contactName.value.toLowerCase();
+
+    console.log('contactName, contactPhone', contactName.value, contactPhone.value);
 
     contacts.find(
       contact => contact.name.toLowerCase() === normalizeNewContactName
     )
       ? alert(`${contactName.value} is already incontacts`)
       : dispatch(
-          addContact({ name: contactName.value, number: contactNumber.value })
+          addContact({ name: contactName.value, phone: contactPhone.value })
         );
 
     setContactName('');
-    setContactNumber('');
+    setContactPhone('');
     toggleModal();
   };
 
@@ -74,9 +76,9 @@ export function ContactForm({ toggleModal }) {
           required
           type="tel"
           label="Phone"
-          name="contactNumber"
+          name="contactPhone"
           onChange={handleChange}
-          value={contactNumber}
+          value={contactPhone}
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           style={{ width: '38ch' }}
