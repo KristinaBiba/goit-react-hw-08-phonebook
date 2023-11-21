@@ -4,6 +4,7 @@ import { Suspense } from 'react';
 import { useAuth } from 'redux/Auth/useAuth';
 import { Navigation } from 'components/Navigation/Navigation';
 import { UserMenu } from 'components/UserMenu/UserMenu';
+import { Loader } from 'components/Loader/Loader';
 
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -19,7 +20,16 @@ export function SharedLayout() {
       <AppBar position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <Link to="/login" style={{display: 'flex', alignItems: 'center', color: 'inherit', textDecoration: 'none', height: 36}}>
+            <Link
+              to="/login"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                color: 'inherit',
+                textDecoration: 'none',
+                height: 36,
+              }}
+            >
               <DiamondIcon sx={{ display: 'flex', mr: 1 }} />
               <Typography
                 variant="h6"
@@ -43,7 +53,8 @@ export function SharedLayout() {
           </Toolbar>
         </Container>
       </AppBar>
-      <Suspense fallback={<div>Loading page...</div>}>
+
+      <Suspense fallback={<Loader />}>
         <Outlet />
       </Suspense>
     </>
