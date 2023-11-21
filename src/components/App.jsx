@@ -1,5 +1,5 @@
 import { lazy, useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { SharedLayout } from "components/SharedLayout/SharedLayout";
 import { useAuth } from "redux/Auth/useAuth";
 import { refreshUser } from "redux/Auth/authOperations";
@@ -23,6 +23,7 @@ export function App() {
      return ( isRefreshing ? <div>Loading...</div> :
 (       <Routes>
         <Route path="/" element={<SharedLayout/>}>
+            <Route index element={<Navigate to="/login" />} />
             <Route path="login" element={<RestrictedRoute redirectTo="/contacts" component={<Login />} />}></Route>
             <Route path="register" element={<RestrictedRoute redirectTo="/contacts" component={<Register />} />}></Route>
            <Route path="contacts" element={<PrivateRoute redirectTo="/login" component={<Contacts />} />}></Route>

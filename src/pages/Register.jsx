@@ -56,6 +56,7 @@ function Register() {
 
   return (
     <Container maxWidth="xl">
+      <h2 style={{color: "#1976d2", textAlign: "center", marginTop: 48 }}>Don't have an account yet? <br /> Register and start working with contacts!</h2>
       <Card
         sx={{ maxWidth: 375 }}
         style={{ marginRight: 'auto', marginLeft: 'auto', marginTop: 24 }}

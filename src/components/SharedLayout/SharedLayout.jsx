@@ -1,5 +1,4 @@
-
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import { Suspense } from 'react';
 
 import { useAuth } from 'redux/Auth/useAuth';
@@ -13,39 +12,40 @@ import Container from '@mui/material/Container';
 import DiamondIcon from '@mui/icons-material/Diamond';
 
 export function SharedLayout() {
+  const { isLoggedIn } = useAuth();
 
-    const {isLoggedIn} = useAuth();
-
-    return (
-        <>
-            <AppBar position="static">
-                <Container maxWidth="xl">
-                    <Toolbar disableGutters>
-                    <DiamondIcon sx={{ display: 'flex', mr: 1 }} />
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="span"
-                        // href="/"
-                        sx={{
-                        mr: 2,
-                        display: 'flex',
-                        fontFamily: 'monospace',
-                        fontWeight: 700,
-                        letterSpacing: '.3rem',
-                        color: 'inherit',
-                        textDecoration: 'none',
-                        }}
-                    >
-                        PHONEBOOK
-                    </Typography>
-                        <Navigation />
-                        {isLoggedIn && <UserMenu />}
-                    </Toolbar>
-                </Container>
-            </AppBar>
-            <Suspense fallback={<div>Loading page...</div>}>
-                <Outlet />
-            </Suspense>
-        </>);
+  return (
+    <>
+      <AppBar position="static">
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            <Link to="/login" style={{display: 'flex', alignItems: 'center', color: 'inherit', textDecoration: 'none', height: 36}}>
+              <DiamondIcon sx={{ display: 'flex', mr: 1 }} />
+              <Typography
+                variant="h6"
+                noWrap
+                component="span"
+                sx={{
+                  mr: 2,
+                  display: 'flex',
+                  fontFamily: 'monospace',
+                  fontWeight: 700,
+                  letterSpacing: '.3rem',
+                  color: 'inherit',
+                  textDecoration: 'none',
+                }}
+              >
+                PHONEBOOK
+              </Typography>
+            </Link>
+            <Navigation />
+            {isLoggedIn && <UserMenu />}
+          </Toolbar>
+        </Container>
+      </AppBar>
+      <Suspense fallback={<div>Loading page...</div>}>
+        <Outlet />
+      </Suspense>
+    </>
+  );
 }

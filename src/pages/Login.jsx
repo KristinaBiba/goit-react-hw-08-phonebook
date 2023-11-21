@@ -44,11 +44,14 @@ function Login() {
 
   return (
     <Container maxWidth="xl">
+      <h2 style={{color: "#1976d2", textAlign: "center", marginTop: 48 }}>Log in to start working with contacts</h2>
       <Card
         sx={{ maxWidth: 375 }}
-        style={{ marginRight: 'auto', marginLeft: 'auto', marginTop: 24 }}
+        style={{ marginRight: 'auto', marginLeft: 'auto', marginTop: 36 }}
       >
+        
         <CardContent>
+          
           <Box
             component="form"
             sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}

@@ -37,8 +37,6 @@ export function ContactForm({ toggleModal }) {
 
     const normalizeNewContactName = contactName.value.toLowerCase();
 
-    console.log('contactName, contactPhone', contactName.value, contactPhone.value);
-
     contacts.find(
       contact => contact.name.toLowerCase() === normalizeNewContactName
     )
