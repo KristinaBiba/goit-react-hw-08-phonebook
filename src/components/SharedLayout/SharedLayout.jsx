@@ -1,5 +1,7 @@
 import { Link, Outlet } from 'react-router-dom';
 import { Suspense } from 'react';
+import { ToastContainer, Zoom } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { useAuth } from 'redux/Auth/useAuth';
 import { Navigation } from 'components/Navigation/Navigation';
@@ -57,6 +59,21 @@ export function SharedLayout() {
       <Suspense fallback={<Loader />}>
         <Outlet />
       </Suspense>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        limit={1}
+        transition={Zoom}
+      />
     </>
   );
 }

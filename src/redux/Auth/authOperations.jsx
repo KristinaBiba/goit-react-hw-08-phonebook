@@ -1,6 +1,8 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+import { toast } from "react-toastify"
+
 axios.defaults.baseURL = "https://phonebookbackend-jnhb.onrender.com/api";
 
 const setAuthHeader = token => {
@@ -15,9 +17,10 @@ export const register = createAsyncThunk(
   'auth/register',
   async (credentials, thunkAPI) => {
     try {const res = await axios.post('/users/register', credentials);
-      setAuthHeader(res.data.token);
+      toast.success('You have successfully register. To use the application, please confirm the e-mail address you specified.');
       return res.data;
     } catch (error) {
+      toast.error(error.response.data.message);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -28,8 +31,10 @@ export const logIn = createAsyncThunk(
     try {
       const res = await axios.post('/users/login', credentials);
       setAuthHeader(res.data.token);
+      toast.success('You have successfully logged in');
       return res.data;
     } catch (error) {
+      toast.error(error.response.data.message);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -38,7 +43,9 @@ export const logOut = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   try {
     await axios.post('/users/logout');
     clearAuthHeader();
+    toast.success('You are signed out');
   } catch (error) {
+    toast.error(error.message);
     return thunkAPI.rejectWithValue(error.message);
   }
 });
@@ -48,6 +55,7 @@ export const refreshUser = createAsyncThunk(
     const state = thunkAPI.getState();
     const persistedToken = state.auth.token;
     if (persistedToken === null) {
+      toast.info('Current session is over, please log in again');
       return thunkAPI.rejectWithValue('Unable to fetch user');
     }
 
@@ -56,6 +64,7 @@ export const refreshUser = createAsyncThunk(
       const res = await axios.post('/users/current');
       return res.data;
     } catch (error) {
+      toast.info('Please log in again');
       return thunkAPI.rejectWithValue(error.message);
     }
   }

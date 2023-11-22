@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { register } from 'redux/Auth/authOperations';
+
+import { useAuth } from 'redux/Auth/useAuth';
+
+import { Loader } from 'components/Loader/Loader';
 
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -15,6 +20,9 @@ function Register() {
   const [userPassword, setUserPassword] = useState('');
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { isLoading } = useAuth();
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -48,13 +56,16 @@ function Register() {
         password: userPassword.value,
       })
     );
+    navigate('/', { replace: true });
 
     setUserName('');
     setUserEmail('');
     setUserPassword('');
   };
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <Container maxWidth="xl">
       <h2 style={{color: "#1976d2", textAlign: "center", marginTop: 48 }}>Don't have an account yet? <br /> Register and start working with contacts!</h2>
       <Card

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
@@ -11,9 +11,11 @@ import 'index.css';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
-      <PersistGate loading={<Loader/>} persistor={persistor}>
+      <PersistGate loading={<Loader />} persistor={persistor}>
         <BrowserRouter basename="goit-react-hw-08-phonebook">
-          <App />
+          <Suspense fallback={<Loader />}>
+            <App />
+          </Suspense>
         </BrowserRouter>
       </PersistGate>
     </Provider>

@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+
 import { logIn } from 'redux/Auth/authOperations';
+import { useAuth } from 'redux/Auth/useAuth';
+
+import { Loader } from 'components/Loader/Loader';
 
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -12,6 +16,8 @@ import TextField from '@mui/material/TextField';
 function Login() {
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
+
+  const { isLoading } = useAuth();
 
   const dispatch = useDispatch();
 
@@ -42,16 +48,18 @@ function Login() {
     setUserPassword('');
   };
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <Container maxWidth="xl">
-      <h2 style={{color: "#1976d2", textAlign: "center", marginTop: 48 }}>Log in to start working with contacts</h2>
+      <h2 style={{ color: '#1976d2', textAlign: 'center', marginTop: 48 }}>
+        Log in to start working with contacts
+      </h2>
       <Card
         sx={{ maxWidth: 375 }}
         style={{ marginRight: 'auto', marginLeft: 'auto', marginTop: 36 }}
       >
-        
         <CardContent>
-          
           <Box
             component="form"
             sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}
