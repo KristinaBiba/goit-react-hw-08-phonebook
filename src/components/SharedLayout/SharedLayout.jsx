@@ -1,9 +1,11 @@
-import { Link, Outlet } from 'react-router-dom';
 import { Suspense } from 'react';
+import { Link, Outlet } from 'react-router-dom';
+
 import { ToastContainer, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { useAuth } from 'redux/Auth/useAuth';
+
 import { Navigation } from 'components/Navigation/Navigation';
 import { UserMenu } from 'components/UserMenu/UserMenu';
 import { Loader } from 'components/Loader/Loader';

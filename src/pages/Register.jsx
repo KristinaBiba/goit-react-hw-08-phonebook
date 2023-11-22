@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { register } from 'redux/Auth/authOperations';
 
+import { register } from 'redux/Auth/authOperations';
 import { useAuth } from 'redux/Auth/useAuth';
 
 import { Loader } from 'components/Loader/Loader';
