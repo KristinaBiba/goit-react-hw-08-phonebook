@@ -18,11 +18,11 @@ export function UserMenu() {
         dispatch(logOut());
     }
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }} style={{marginLeft: "auto"}} >
+        <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center', gap: '8px' }} style={{marginLeft: "auto"}} >
             <Typography sx={{ minWidth: 100 }}>{email}</Typography>
-            <MenuItem onClick={handleLogOut}>
+            <MenuItem onClick={handleLogOut} sx={{border: "1px solid #FFFFFF", borderRadius: '8px'}}>
                 <ListItemIcon>
-                    <Logout fontSize="small" />
+                    <Logout fontSize="small" sx={{color: "#FFFFFF"}} />
                 </ListItemIcon>
                 Logout
             </MenuItem>
