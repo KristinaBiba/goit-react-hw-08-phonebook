@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,12 +7,14 @@ import { useAuth } from 'redux/Auth/useAuth';
 
 import { Loader } from 'components/Loader/Loader';
 
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import { Container } from '@mui/material';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
+import {
+  Box,
+  Card,
+  Container,
+  CardContent,
+  Button,
+  TextField,
+} from '@mui/material';
 
 function Register() {
   const [userName, setUserName] = useState('');
@@ -67,7 +69,10 @@ function Register() {
     <Loader />
   ) : (
     <Container maxWidth="xl">
-      <h2 style={{color: "#1976d2", textAlign: "center", marginTop: 48 }}>Don't have an account yet? <br /> Register and start working with contacts!</h2>
+      <h2 style={{ color: '#1976d2', textAlign: 'center', marginTop: 48 }}>
+        Don't have an account yet? <br /> Register and start working with
+        contacts!
+      </h2>
       <Card
         sx={{ maxWidth: 375 }}
         style={{ marginRight: 'auto', marginLeft: 'auto', marginTop: 24 }}

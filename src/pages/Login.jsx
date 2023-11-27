@@ -6,12 +6,14 @@ import { useAuth } from 'redux/Auth/useAuth';
 
 import { Loader } from 'components/Loader/Loader';
 
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import { Container } from '@mui/material';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
+import {
+  Card,
+  CardContent,
+  Button,
+  Container,
+  Box,
+  TextField,
+} from '@mui/material';
 
 function Login() {
   const [userEmail, setUserEmail] = useState('');

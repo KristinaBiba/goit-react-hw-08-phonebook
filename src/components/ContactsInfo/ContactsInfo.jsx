@@ -1,7 +1,9 @@
-import { Ul } from './ContactsInfo._css';
 import { useSelector } from 'react-redux';
 import { getContacts, getFilter } from "redux/selectors";
+
 import {ContactInfo} from 'components/ContactInfo/ContactInfo';
+
+import { Ul } from './ContactsInfo._css';
 
 export const ContactsInfo = () => {
 

@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+
+import PropTypes from 'prop-types';
+
 import { getContacts } from 'redux/selectors';
 import { addContact } from 'redux/Contacts/operations';
 
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
+import {Button, Box, TextField} from '@mui/material';
 
 export function ContactForm({ toggleModal }) {
   const [contactName, setContactName] = useState('');
@@ -94,3 +95,7 @@ export function ContactForm({ toggleModal }) {
     </Box>
   );
 }
+
+ContactForm.propTypes = {
+  toggleModal: PropTypes.func,
+};

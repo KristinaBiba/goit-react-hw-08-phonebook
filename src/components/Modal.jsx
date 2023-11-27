@@ -2,13 +2,10 @@ import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 import PropTypes from 'prop-types';
+
 import { ContactForm } from './ContactForm/ContactForm';
 
-import Backdrop from '@mui/material/Backdrop';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import Button from '@mui/material/Button';
+import { Backdrop, Box, Modal, Fade, Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 const modalRoot = document.getElementById('modal-root');
@@ -23,6 +20,7 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  borderColor: 'primary',
 };
 
 export function ModalWindow({ toggleModal, isModalOpen }) {
@@ -63,8 +61,8 @@ export function ModalWindow({ toggleModal, isModalOpen }) {
       }}
     >
       <Fade in={isModalOpen}>
-        <Box sx={style} style={{ borderColor: 'primary' }}>
-          <Button style={{ left: '88%' }} onClick={handleClose}>
+        <Box sx={style}>
+          <Button sx={{ left: '88%' }} onClick={handleClose}>
             <CloseIcon />
           </Button>
           <ContactForm toggleModal={toggleModal} />

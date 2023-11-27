@@ -10,10 +10,7 @@ import { Navigation } from 'components/Navigation/Navigation';
 import { UserMenu } from 'components/UserMenu/UserMenu';
 import { Loader } from 'components/Loader/Loader';
 
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import {AppBar, Toolbar, Typography, Container} from '@mui/material';
 import DiamondIcon from '@mui/icons-material/Diamond';
 
 export function SharedLayout() {
