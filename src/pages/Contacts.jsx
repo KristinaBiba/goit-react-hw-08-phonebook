@@ -1,13 +1,16 @@
-import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { fetchContacts } from 'redux/Contacts/operations';
+import { getIsLoading, getError, getContacts } from 'redux/selectors';
 import { Section } from 'components/Section/Section';
 import { ContactsInfo } from 'components/ContactsInfo/ContactsInfo';
 import { Filter } from 'components/Filter/Filter';
-import { fetchContacts } from 'redux/Contacts/operations';
-import { getIsLoading, getError, getContacts } from 'redux/selectors';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { Button, Typography } from '@mui/material';
 import { ModalWindow } from 'components/Modal';
+import { ContastsSkeleton } from 'components/ContastsSkeleton/ContastsSkeleton';
+
+import { Button, Typography } from '@mui/material';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import SearchIcon from '@mui/icons-material/Search';
 
 function Contacts() {
@@ -54,11 +57,10 @@ function Contacts() {
           </Button>
         </div>
         {isFilterOpen && <Filter />}
-        {isLoading && !error && contacts.length === 0 && (
-          <b style={{ paddingLeft: '12px', fontSize: '24px' }}>
-            Request in progress...
-          </b>
-        )}
+
+        {isLoading && !error && contacts.length === 0 && 
+        <ContastsSkeleton/>}
+
         <ContactsInfo />
       </Section>
 
