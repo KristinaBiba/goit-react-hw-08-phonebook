@@ -53,4 +53,4 @@ export function App() {
       <Route path="*" element={<Navigate replace to="/404" />} />
     </Routes>
   );
-}
+};

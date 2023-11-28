@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
 
-import { Container } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 
 function NotFound() {
   return (
     <Container style={{ color: '#1976d2', textAlign: 'center', marginTop: 80 }}>
-      <h2 >"Sorry, this page is not found"</h2>
+      <Typography component="h2" variant="h5" gutterBottom>
+        "Sorry, this page is not found"
+      </Typography>
       <Link to="/">Return to the main page</Link>
     </Container>
   );

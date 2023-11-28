@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
 import { register } from 'redux/Auth/authOperations';
 import { useAuth } from 'redux/Auth/useAuth';
@@ -14,7 +13,14 @@ import {
   CardContent,
   Button,
   TextField,
+  Typography,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  InputAdornment,
+  IconButton,
 } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 function Register() {
   const [userName, setUserName] = useState('');
@@ -22,7 +28,6 @@ function Register() {
   const [userPassword, setUserPassword] = useState('');
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const { isLoading } = useAuth();
 
@@ -58,34 +63,48 @@ function Register() {
         password: userPassword.value,
       })
     );
-    navigate('/', { replace: true });
+  };
 
-    setUserName('');
-    setUserEmail('');
-    setUserPassword('');
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword(show => !show);
+
+  const handleMouseDownPassword = event => {
+    event.preventDefault();
   };
 
   return isLoading ? (
     <Loader />
   ) : (
     <Container maxWidth="xl">
-      <h2 style={{ color: '#1976d2', textAlign: 'center', marginTop: 48 }}>
+      <Typography
+        variant="h5"
+        component="h2"
+        align="center"
+        color="primary"
+        mt={4}
+        sx={{ fontWeight: '700' }}
+      >
         Don't have an account yet? <br /> Register and start working with
         contacts!
-      </h2>
+      </Typography>
       <Card
-        sx={{ maxWidth: 375 }}
-        style={{ marginRight: 'auto', marginLeft: 'auto', marginTop: 24 }}
+        sx={{
+          maxWidth: 375,
+          marginRight: 'auto',
+          marginLeft: 'auto',
+          marginTop: '32px',
+        }}
       >
         <CardContent>
           <Box
             component="form"
-            sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}
-            noValidate
             autoComplete="off"
             onSubmit={handleRegister}
+            noValidate
+            sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}
           >
-            <div>
+            <FormControl>
               <TextField
                 required
                 label="Name"
@@ -98,6 +117,9 @@ function Register() {
                 title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
                 style={{ width: '38ch' }}
               />
+            </FormControl>
+
+            <FormControl>
               <TextField
                 required
                 label="Email"
@@ -109,25 +131,43 @@ function Register() {
                 title="Email must be digits, letters and contain @"
                 style={{ width: '38ch' }}
               />
-              <TextField
-                required
+            </FormControl>
+
+            <FormControl sx={{ m: 1, width: '38ch' }} variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-password" required>
+                Password
+              </InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-password"
+                type={showPassword ? 'text' : 'password'}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
                 label="Password"
-                autoComplete="current-password"
-                type="password"
+                required
+                pattern="/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}/g"
+                title="Password must contain letters and numbers"
                 name="userPassword"
                 onChange={handleChange}
                 value={userPassword}
-                pattern="/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}/g"
-                title="Password must contain letters and numbers"
-                style={{ width: '38ch' }}
+                autoComplete="current-password"
               />
-            </div>
+            </FormControl>
 
             <Button
               size="small"
               type="submit"
               text="Register"
-              style={{ marginLeft: '8px' }}
+              style={{ marginLeft: '8px', marginTop: '12px' }}
             >
               Register
             </Button>

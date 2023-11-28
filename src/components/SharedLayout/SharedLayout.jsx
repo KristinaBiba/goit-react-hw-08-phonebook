@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 import { ToastContainer, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,7 +10,7 @@ import { Navigation } from 'components/Navigation/Navigation';
 import { UserMenu } from 'components/UserMenu/UserMenu';
 import { Loader } from 'components/Loader/Loader';
 
-import {AppBar, Toolbar, Typography, Container} from '@mui/material';
+import { Link, AppBar, Toolbar, Container } from '@mui/material';
 import DiamondIcon from '@mui/icons-material/Diamond';
 
 export function SharedLayout() {
@@ -20,36 +20,24 @@ export function SharedLayout() {
     <>
       <AppBar position="static">
         <Container maxWidth="xl">
-          <Toolbar disableGutters>
+          <Toolbar disableGutters sx={{justifyContent: 'space-between'}}>
             <Link
-              to="/login"
-              style={{
+              href="/goit-react-hw-08-phonebook/login"
+              underline="none"
+              color="inherit"
+              variant="h6"
+              sx={{
                 display: 'flex',
                 alignItems: 'center',
-                color: 'inherit',
-                textDecoration: 'none',
-                height: 36,
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
               }}
             >
-              <DiamondIcon sx={{ display: 'flex', mr: 1 }} />
-              <Typography
-                variant="h6"
-                noWrap
-                component="span"
-                sx={{
-                  mr: 2,
-                  display: 'flex',
-                  fontFamily: 'monospace',
-                  fontWeight: 700,
-                  letterSpacing: '.3rem',
-                  color: 'inherit',
-                  textDecoration: 'none',
-                }}
-              >
+              <DiamondIcon sx={{ mr: 1 }} />
                 PHONEBOOK
-              </Typography>
             </Link>
-            <Navigation />
+            {!isLoggedIn && <Navigation />}
             {isLoggedIn && <UserMenu />}
           </Toolbar>
         </Container>

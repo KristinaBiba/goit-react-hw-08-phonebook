@@ -1,9 +1,11 @@
-import axios from "axios";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { toast } from "react-toastify";
 
-axios.defaults.baseURL = "https://phonebookbackend-jnhb.onrender.com/api";
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
+axios.defaults.baseURL = 'https://phonebookbackend-jnhb.onrender.com/api';
 
 const setAuthHeader = token => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -16,8 +18,13 @@ const clearAuthHeader = () => {
 export const register = createAsyncThunk(
   'auth/register',
   async (credentials, thunkAPI) => {
-    try {const res = await axios.post('/users/register', credentials);
-      toast.success('You have successfully register. To use the application, please confirm the e-mail address you specified.');
+    try {
+      const res = await axios.post('/users/register', credentials);
+      const navigate = useNavigate();
+      navigate('/', { replace: true });
+      toast.success(
+        'You have successfully register. To use the application, please confirm the e-mail address you specified.'
+      );
       return res.data;
     } catch (error) {
       toast.error(error.response.data.message);

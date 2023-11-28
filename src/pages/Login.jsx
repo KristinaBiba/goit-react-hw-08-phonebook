@@ -12,8 +12,15 @@ import {
   Button,
   Container,
   Box,
+  FormControl,
   TextField,
+  Typography,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
 } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 function Login() {
   const [userEmail, setUserEmail] = useState('');
@@ -50,26 +57,45 @@ function Login() {
     setUserPassword('');
   };
 
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword(show => !show);
+
+  const handleMouseDownPassword = event => {
+    event.preventDefault();
+  };
+
   return isLoading ? (
     <Loader />
   ) : (
     <Container maxWidth="xl">
-      <h2 style={{ color: '#1976d2', textAlign: 'center', marginTop: 48 }}>
+      <Typography
+        variant="h5"
+        component="h2"
+        align="center"
+        color="primary"
+        mt={4}
+        sx={{ fontWeight: '700' }}
+      >
         Log in to start working with contacts
-      </h2>
+      </Typography>
       <Card
-        sx={{ maxWidth: 375 }}
-        style={{ marginRight: 'auto', marginLeft: 'auto', marginTop: 36 }}
+        sx={{
+          maxWidth: 375,
+          marginRight: 'auto',
+          marginLeft: 'auto',
+          marginTop: '32px',
+        }}
       >
         <CardContent>
           <Box
             component="form"
-            sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}
-            // noValidate
             autoComplete="off"
             onSubmit={handleLogIn}
+            noValidate
+            sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}
           >
-            {/* <div> */}
+            <FormControl>
               <TextField
                 required
                 label="Email"
@@ -81,25 +107,43 @@ function Login() {
                 title="Email must be digits, letters and contain @"
                 style={{ width: '38ch' }}
               />
-              <TextField
-                required
+            </FormControl>
+
+            <FormControl sx={{ m: 1, width: '38ch' }} variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-password" required>
+                Password
+              </InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-password"
+                type={showPassword ? 'text' : 'password'}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
                 label="Password"
-                autoComplete="current-password"
-                type="password"
+                required
+                pattern="/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}/g"
+                title="Password must contain letters and numbers"
                 name="userPassword"
                 onChange={handleChange}
                 value={userPassword}
-                pattern="/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}/g"
-                title="Password must contain letters and numbers"
-                style={{ width: '38ch' }}
+                autoComplete="current-password"
               />
-            {/* </div> */}
+            </FormControl>
 
             <Button
               size="small"
               type="submit"
               text="LogIn"
-              style={{ marginLeft: '8px' }}
+              style={{ marginLeft: '8px', marginTop: '12px' }}
             >
               Log In
             </Button>
