@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { ContactForm } from 'components/ContactForm/ContactForm';
 
-import { Backdrop, Box, Modal, Fade, Button, IconButton } from '@mui/material';
+import { Backdrop, Box, Modal, Fade, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 const modalRoot = document.getElementById('modal-root');
@@ -15,7 +15,6 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  // width: 400,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
