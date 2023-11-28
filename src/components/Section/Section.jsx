@@ -1,13 +1,20 @@
 import PropTypes from 'prop-types';
-
-import { Title, SectionEl } from './Section_css';
+import { Box, Typography } from '@mui/material';
 
 export const Section = ({ title, children }) => {
   return (
-    <SectionEl>
-      {title && <Title>{title}</Title>}
+    <Box sx={{ marginTop: '12px', marginBottom: '12px', textAlign: 'center' }}>
+      {title && (
+        <Typography
+          variant="h4"
+          component="h2"
+          sx={{ textAlign: 'center', marginBottom: '12px' }}
+        >
+          {title}
+        </Typography>
+      )}
       {children}
-    </SectionEl>
+    </Box>
   );
 };
 

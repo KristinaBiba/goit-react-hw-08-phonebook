@@ -2,20 +2,19 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { fetchContacts } from 'redux/Contacts/operations';
-import { getIsLoading, getError, getContacts } from 'redux/selectors';
+import { getIsLoading, getError } from 'redux/selectors';
 import { Section } from 'components/Section/Section';
 import { ContactsInfo } from 'components/ContactsInfo/ContactsInfo';
 import { Filter } from 'components/Filter/Filter';
-import { ModalWindow } from 'components/Modal';
 import { ContastsSkeleton } from 'components/ContastsSkeleton/ContastsSkeleton';
+import { ModalWindow } from 'components/Modal/Modal';
 
-import { Button, Typography } from '@mui/material';
+import { Button } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import SearchIcon from '@mui/icons-material/Search';
 
 function Contacts() {
   const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
   const isLoading = useSelector(getIsLoading);
   const error = useSelector(getError);
 
@@ -40,14 +39,7 @@ function Contacts() {
 
   return (
     <>
-      <Section>
-        <Typography
-          variant="h4"
-          component="h2"
-          style={{ textAlign: 'center', marginBottom: '12px' }}
-        >
-          My contacts
-        </Typography>
+      <Section title='My contacts'>
         <div style={{ marginBottom: '12px' }}>
           <Button type="button" onClick={handleOpenModal}>
             <AddCircleIcon color="primary" fontSize="large" />
@@ -58,10 +50,10 @@ function Contacts() {
         </div>
         {isFilterOpen && <Filter />}
 
-        {isLoading && !error && contacts.length === 0 && 
+        {isLoading && !error && 
         <ContastsSkeleton/>}
 
-        <ContactsInfo />
+        {!isLoading && <ContactsInfo />}
       </Section>
 
       {isModalOpen && (

@@ -1,17 +1,13 @@
-// import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
+
 import { deleteContact } from 'redux/Contacts/operations';
 
-import { styled } from '@mui/material/styles';
 import {
-  Box,
-  List,
   ListItem,
   ListItemAvatar,
   ListItemText,
   Avatar,
-  Grid,
   IconButton,
 } from '@mui/material';
 import PhoneIcon from '@mui/icons-material/Phone';
@@ -24,15 +20,7 @@ export const ContactInfo = ({ _id, name, phone }) => {
     dispatch(deleteContact(_id));
   };
 
-  const Demo = styled('div')(({ theme }) => ({
-    backgroundColor: theme.palette.background.paper,
-  }));
-
   return (
-    <Box sx={{ flexGrow: 1, maxWidth: '100%' }}>
-      <Grid item xs={12} md={6}>
-        <Demo>
-          <List>
             <ListItem
               secondaryAction={
                 <IconButton
@@ -41,6 +29,7 @@ export const ContactInfo = ({ _id, name, phone }) => {
                   onClick={() => {
                     onDeliteContact(_id);
                   }}
+                  sx={{ flexGrow: 1, maxWidth: '100%' }}
                 >
                   <DeleteIcon />
                 </IconButton>
@@ -55,10 +44,6 @@ export const ContactInfo = ({ _id, name, phone }) => {
                 {name}: {phone}
               </ListItemText>
             </ListItem>
-          </List>
-        </Demo>
-      </Grid>
-    </Box>
   );
 };
 
