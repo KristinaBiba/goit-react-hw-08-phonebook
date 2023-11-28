@@ -55,7 +55,6 @@ export const refreshUser = createAsyncThunk(
     const state = thunkAPI.getState();
     const persistedToken = state.auth.token;
     if (persistedToken === null) {
-      toast.info('Current session is over, please log in again');
       return thunkAPI.rejectWithValue('Unable to fetch user');
     }
 
@@ -64,7 +63,6 @@ export const refreshUser = createAsyncThunk(
       const res = await axios.post('/users/current');
       return res.data;
     } catch (error) {
-      toast.info('Please log in again');
       return thunkAPI.rejectWithValue(error.message);
     }
   }

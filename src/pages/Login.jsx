@@ -65,11 +65,11 @@ function Login() {
           <Box
             component="form"
             sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}
-            noValidate
+            // noValidate
             autoComplete="off"
             onSubmit={handleLogIn}
           >
-            <div>
+            {/* <div> */}
               <TextField
                 required
                 label="Email"
@@ -93,7 +93,7 @@ function Login() {
                 title="Password must contain letters and numbers"
                 style={{ width: '38ch' }}
               />
-            </div>
+            {/* </div> */}
 
             <Button
               size="small"
