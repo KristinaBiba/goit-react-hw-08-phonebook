@@ -68,7 +68,7 @@ function Login() {
   return isLoading ? (
     <Loader />
   ) : (
-    <Container maxWidth="xl">
+    <Container component='main' maxWidth="xl">
       <Typography
         variant="h5"
         component="h2"

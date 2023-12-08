@@ -3,7 +3,10 @@ import { Box, Typography } from '@mui/material';
 
 export const Section = ({ title, children }) => {
   return (
-    <Box sx={{ marginTop: '12px', marginBottom: '12px', textAlign: 'center' }}>
+    <Box
+      component="main"
+      sx={{ marginTop: '12px', marginBottom: '12px', textAlign: 'center' }}
+    >
       {title && (
         <Typography
           variant="h4"
