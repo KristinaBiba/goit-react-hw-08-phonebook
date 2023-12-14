@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
 
-import { register } from 'redux/Auth/authOperations';
+import { registerUser } from 'redux/Auth/authOperations';
 import { useAuth } from 'redux/Auth/useAuth';
+import { userRegisterValidator } from 'utils/userRegisterValidator';
 
 import { Loader } from 'components/Loader/Loader';
 
@@ -50,17 +53,17 @@ function Register() {
         break;
     }
   };
+  
+  const { register, handleSubmit, formState: { errors }} = useForm({
+    resolver: joiResolver(userRegisterValidator),
+  });
 
-  const handleRegister = e => {
-    e.preventDefault();
-
-    const { userName, userEmail, userPassword } = e.currentTarget.elements;
-
+  const handleRegister = ({ userName, userEmail, userPassword }) => {
     dispatch(
-      register({
-        name: userName.value,
-        email: userEmail.value,
-        password: userPassword.value,
+      registerUser({
+        name: userName,
+        email: userEmail,
+        password: userPassword,
       })
     );
   };
@@ -76,7 +79,7 @@ function Register() {
   return isLoading ? (
     <Loader />
   ) : (
-    <Container component='main' maxWidth="xl">
+    <Container component="main" maxWidth="xl">
       <Typography
         variant="h5"
         component="h2"
@@ -100,12 +103,13 @@ function Register() {
           <Box
             component="form"
             autoComplete="off"
-            onSubmit={handleRegister}
+            onSubmit={handleSubmit(handleRegister)}
             noValidate
             sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}
           >
             <FormControl>
               <TextField
+                {...register('userName')}
                 required
                 label="Name"
                 autoComplete="on"
@@ -113,24 +117,23 @@ function Register() {
                 name="userName"
                 onChange={handleChange}
                 value={userName}
-                pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-                title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
                 style={{ width: '38ch' }}
               />
+              <Typography variant='body2' component='p' style={{color: 'red', paddingLeft: '12px'}}>{errors.userName?.message}</Typography>
             </FormControl>
 
             <FormControl>
               <TextField
-                required
+                {...register('userEmail')}
                 label="Email"
                 autoComplete="on"
                 type="email"
                 name="userEmail"
                 onChange={handleChange}
                 value={userEmail}
-                title="Email must be digits, letters and contain @"
                 style={{ width: '38ch' }}
               />
+              <Typography variant='body2' component='p' style={{color: 'red', paddingLeft: '12px'}}>{errors.userEmail?.message}</Typography>
             </FormControl>
 
             <FormControl sx={{ m: 1, width: '38ch' }} variant="outlined">
@@ -152,15 +155,14 @@ function Register() {
                     </IconButton>
                   </InputAdornment>
                 }
+                {...register('userPassword')}
                 label="Password"
-                required
-                pattern="/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}/g"
-                title="Password must contain letters and numbers"
                 name="userPassword"
                 onChange={handleChange}
                 value={userPassword}
                 autoComplete="current-password"
               />
+              <Typography variant='body2' component='p' style={{color: 'red', paddingLeft: '12px'}}>{errors.userPassword?.message}</Typography>
             </FormControl>
 
             <Button
