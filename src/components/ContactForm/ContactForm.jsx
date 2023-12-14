@@ -2,11 +2,14 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import PropTypes from 'prop-types';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 import { getContacts } from 'redux/selectors';
 import { addContact } from 'redux/Contacts/operations';
+import { contactAddValidator } from 'utils/contactValidator/contactAddValidator';
 
-import {Button, Box, TextField, FormControl, Typography} from '@mui/material';
+import { Button, Box, TextField, FormControl, Typography } from '@mui/material';
 
 export function ContactForm({ toggleModal }) {
   const [contactName, setContactName] = useState('');
@@ -31,20 +34,22 @@ export function ContactForm({ toggleModal }) {
     }
   };
 
-  const handleAddContact = e => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: joiResolver(contactAddValidator),
+  });
 
-    const { contactName, contactPhone } = e.currentTarget.elements;
-
-    const normalizeNewContactName = contactName.value.toLowerCase();
+  const handleAddContact = ({ contactName, contactPhone }) => {
+    const normalizeNewContactName = contactName.toLowerCase();
 
     contacts.find(
       contact => contact.name.toLowerCase() === normalizeNewContactName
     )
-      ? alert(`${contactName.value} is already incontacts`)
-      : dispatch(
-          addContact({ name: contactName.value, phone: contactPhone.value })
-        );
+      ? alert(`${contactName} is already incontacts`)
+      : dispatch(addContact({ name: contactName, phone: contactPhone }));
 
     setContactName('');
     setContactPhone('');
@@ -57,35 +62,55 @@ export function ContactForm({ toggleModal }) {
       sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' }, padding: '12px' }}
       noValidate
       autoComplete="off"
-      onSubmit={handleAddContact}
+      onSubmit={handleSubmit(handleAddContact)}
     >
-      <Typography variant='h6' component="h3" align="center"
-        color="primary" mb={2}> Create new contact</Typography>
-      <Box sx={{display: 'flex', flexDirection: 'column', gap: '8px'}}>
-      <FormControl>
-        <TextField
-          type="text"
-          name="contactName"
-          label="Name"
-          onChange={handleChange}
-          value={contactName}
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          required
-        />
-          </FormControl>
+      <Typography
+        variant="h6"
+        component="h3"
+        align="center"
+        color="primary"
+        mb={2}
+      >
+        {' '}
+        Create new contact
+      </Typography>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
         <FormControl>
-        <TextField
-          required
-          type="tel"
-          label="Phone"
-          name="contactPhone"
-          onChange={handleChange}
-          value={contactPhone}
-          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-        />
-         </FormControl>
+          <TextField
+            {...register('contactName')}
+            type="text"
+            name="contactName"
+            label="Name"
+            onChange={handleChange}
+            value={contactName}
+            required
+          />
+          <Typography
+            variant="body2"
+            component="p"
+            style={{ color: 'red', paddingLeft: '12px' }}
+          >
+            {errors.contactName?.message}
+          </Typography>
+        </FormControl>
+        <FormControl>
+          <TextField
+            {...register('contactPhone')}
+            required
+            type="tel"
+            label="Phone"
+            name="contactPhone"
+            onChange={handleChange}
+            value={contactPhone}
+          />
+          <Typography
+            variant="body2"
+            component="p"
+            style={{ color: 'red', paddingLeft: '12px' }}
+          >
+            {errors.contactPhone?.message}
+          </Typography>
+        </FormControl>
       </Box>
 
       <Button

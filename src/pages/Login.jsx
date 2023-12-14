@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 import { logIn } from 'redux/Auth/authOperations';
 import { useAuth } from 'redux/Auth/useAuth';
+import { userLoginValidator } from 'utils/userValidation/userLoginValidator';
 
 import { Loader } from 'components/Loader/Loader';
 
@@ -45,14 +48,21 @@ function Login() {
         break;
     }
   };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: joiResolver(userLoginValidator),
+  });
 
-  const handleLogIn = e => {
-    e.preventDefault();
-
-    const { userEmail, userPassword } = e.currentTarget.elements;
-
-    dispatch(logIn({ email: userEmail.value, password: userPassword.value }));
-
+  const handleLogIn = ({ userEmail, userPassword }) => {
+    dispatch(
+      logIn({
+        email: userEmail,
+        password: userPassword,
+      })
+    );
     setUserEmail('');
     setUserPassword('');
   };
@@ -68,7 +78,7 @@ function Login() {
   return isLoading ? (
     <Loader />
   ) : (
-    <Container component='main' maxWidth="xl">
+    <Container component="main" maxWidth="xl">
       <Typography
         variant="h5"
         component="h2"
@@ -91,22 +101,28 @@ function Login() {
           <Box
             component="form"
             autoComplete="off"
-            onSubmit={handleLogIn}
+            onSubmit={handleSubmit(handleLogIn)}
             noValidate
             sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}
           >
             <FormControl>
               <TextField
-                required
+                {...register('userEmail')}
                 label="Email"
                 autoComplete="on"
                 type="email"
                 name="userEmail"
                 onChange={handleChange}
                 value={userEmail}
-                title="Email must be digits, letters and contain @"
                 style={{ width: '38ch' }}
               />
+              <Typography
+                variant="body2"
+                component="p"
+                style={{ color: 'red', paddingLeft: '12px' }}
+              >
+                {errors.userEmail?.message}
+              </Typography>
             </FormControl>
 
             <FormControl sx={{ m: 1, width: '38ch' }} variant="outlined">
@@ -128,15 +144,21 @@ function Login() {
                     </IconButton>
                   </InputAdornment>
                 }
+                {...register('userPassword')}
                 label="Password"
                 required
-                pattern="/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}/g"
-                title="Password must contain letters and numbers"
                 name="userPassword"
                 onChange={handleChange}
                 value={userPassword}
                 autoComplete="current-password"
               />
+              <Typography
+                variant="body2"
+                component="p"
+                style={{ color: 'red', paddingLeft: '12px' }}
+              >
+                {errors.userPassword?.message}
+              </Typography>
             </FormControl>
 
             <Button

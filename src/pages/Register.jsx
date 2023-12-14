@@ -5,7 +5,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 
 import { registerUser } from 'redux/Auth/authOperations';
 import { useAuth } from 'redux/Auth/useAuth';
-import { userRegisterValidator } from 'utils/userRegisterValidator';
+import { userRegisterValidator } from 'utils/userValidation/userRegisterValidator';
 
 import { Loader } from 'components/Loader/Loader';
 
