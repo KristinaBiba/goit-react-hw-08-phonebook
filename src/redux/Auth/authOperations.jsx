@@ -19,7 +19,9 @@ export const registerUser = createAsyncThunk(
   async (credentials, thunkAPI) => {
     try {
       const res = await axios.post('/users/register', credentials);
+      console.log(res);
       const navigate = useNavigate();
+      console.log(navigate);
       navigate('/', { replace: true });
       toast.success(
         'You have successfully register. To use the application, please confirm the e-mail address you specified.'
