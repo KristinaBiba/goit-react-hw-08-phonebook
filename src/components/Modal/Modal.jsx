@@ -3,8 +3,6 @@ import { createPortal } from 'react-dom';
 
 import PropTypes from 'prop-types';
 
-import { ContactForm } from 'components/ContactForm/ContactForm';
-
 import { Backdrop, Box, Modal, Fade, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -22,7 +20,7 @@ const style = {
   borderColor: 'primary',
 };
 
-export function ModalWindow({ toggleModal, isModalOpen }) {
+export function ModalWindow({ toggleModal, isModalOpen, children }) {
   useEffect(() => {
     window.addEventListener('keydown', handleEsc);
 
@@ -64,7 +62,7 @@ export function ModalWindow({ toggleModal, isModalOpen }) {
           <IconButton sx={{ left: '90%' }}  onClick={handleClose} aria-label="add an alarm">
             <CloseIcon />
           </IconButton>
-          <ContactForm toggleModal={toggleModal} />
+          {children}
         </Box>
       </Fade>
     </Modal>,

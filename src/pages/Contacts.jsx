@@ -12,6 +12,7 @@ import { ModalWindow } from 'components/Modal/Modal';
 import { Button } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import SearchIcon from '@mui/icons-material/Search';
+import { ContactForm } from 'components/ContactForm/ContactForm';
 
 function Contacts() {
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ function Contacts() {
 
   return (
     <>
-      <Section title='My contacts'>
+      <Section title="My contacts">
         <div style={{ marginBottom: '12px' }}>
           <Button type="button" onClick={handleOpenModal}>
             <AddCircleIcon color="primary" fontSize="large" />
@@ -50,14 +51,15 @@ function Contacts() {
         </div>
         {isFilterOpen && <Filter />}
 
-        {isLoading && !error && 
-        <ContastsSkeleton/>}
+        {isLoading && !error && <ContastsSkeleton />}
 
         {!isLoading && <ContactsInfo />}
       </Section>
 
       {isModalOpen && (
-        <ModalWindow isModalOpen={isModalOpen} toggleModal={toggleModal} />
+        <ModalWindow isModalOpen={isModalOpen} toggleModal={toggleModal}>
+          <ContactForm toggleModal={toggleModal} />
+        </ModalWindow>
       )}
     </>
   );
