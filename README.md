@@ -55,7 +55,7 @@ If your application uses the `react-router-dom` library for routing, you must ad
 
 **Client:** React Hooks & Components, React Redax, React Toolkit, HTML, CSS.
 
-**Libraries in the Project:** react-redux, redux-persist, react-router-dom, react-toastify, react-loader-spinner, @reduxjs/toolkit, axios, nanoid, @mui/material, @mui/icons-material.
+**Libraries in the Project:** react-redux, redux-persist, react-router-dom, react-toastify, react-loader-spinner, @reduxjs/toolkit, axios, react-hook-form, @hookform/resolvers, joi, nanoid, @mui/material, @mui/icons-material.
 
 
 ## Authors

@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
 
 axios.defaults.baseURL = 'https://phonebookbackend-jnhb.onrender.com/api';
 
@@ -16,12 +14,10 @@ const clearAuthHeader = () => {
 
 export const registerUser = createAsyncThunk(
   'auth/register',
-  async (credentials, thunkAPI) => {
+  async ({ name, email, password, navigate }, thunkAPI) => {
+    const userData = { name, email, password };
     try {
-      const res = await axios.post('/users/register', credentials);
-      console.log(res);
-      const navigate = useNavigate();
-      console.log(navigate);
+      const res = await axios.post('/users/register', userData);
       navigate('/', { replace: true });
       toast.success(
         'You have successfully register. To use the application, please confirm the e-mail address you specified.'

@@ -24,6 +24,7 @@ import {
   IconButton,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
   const [userName, setUserName] = useState('');
@@ -33,6 +34,8 @@ function Register() {
   const dispatch = useDispatch();
 
   const { isLoading } = useAuth();
+
+  const navigate = useNavigate();
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -64,6 +67,7 @@ function Register() {
         name: userName,
         email: userEmail,
         password: userPassword,
+        navigate
       })
     );
   };
