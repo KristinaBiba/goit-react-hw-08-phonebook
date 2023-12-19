@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import PropTypes from 'prop-types';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 
 import { getContacts } from 'redux/selectors';
@@ -12,45 +11,31 @@ import { contactAddValidator } from 'utils/contactValidator/contactAddValidator'
 import { Button, Box, TextField, FormControl, Typography } from '@mui/material';
 
 export function ContactForm({ toggleModal, edit, id }) {
-  const [contactName, setContactName] = useState('');
-  const [contactPhone, setContactPhone] = useState('');
 
   const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
+  let editContactName = '';
+  let editContactPhone = '';
 
-  useEffect(() => {
-    if (edit) {
-      const editContact = contacts.find(contact => contact._id === id);
-      setContactName(editContact.name);
-      setContactPhone(editContact.phone);
-    }
-  }, [edit, id, contacts]);
-
-  const handleChange = e => {
-    const { name, value } = e.target;
-    switch (name) {
-      case 'contactName':
-        setContactName(value);
-        break;
-      case 'contactPhone':
-        setContactPhone(value);
-        break;
-      default:
-        setContactName('');
-        setContactPhone('');
-        break;
-    }
-  };
-
+  if (edit) {
+    const editContact = contacts.find(contact => contact._id === id);
+    editContactName = editContact.name;
+    editContactPhone = editContact.phone;
+  }
+ 
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm({
+    defaultValues: {
+      contactName: `${editContactName}`,
+      contactPhone: `${editContactPhone}`,
+    },
     resolver: joiResolver(contactAddValidator),
   });
 
-  const handleAddContact = () => {
+  const handleAddContact = ({contactName, contactPhone}) => {
     const normalizeNewContactName = contactName.toLowerCase();
 
     if (edit) {
@@ -70,9 +55,6 @@ export function ContactForm({ toggleModal, edit, id }) {
         ? alert(`${contactName} is already incontacts`)
         : dispatch(addContact({ name: contactName, phone: contactPhone }));
     }
-
-    setContactName('');
-    setContactPhone('');
     toggleModal();
   };
 
@@ -95,13 +77,10 @@ export function ContactForm({ toggleModal, edit, id }) {
       </Typography>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
         <FormControl>
-          <TextField
-            {...register('contactName')}
-            type="text"
+          <Controller
+            render={({ field }) => <TextField {...field} label="Name" />}
             name="contactName"
-            label="Name"
-            onChange={handleChange}
-            value={contactName}
+            control={control}
             required
           />
           <Typography
@@ -113,14 +92,13 @@ export function ContactForm({ toggleModal, edit, id }) {
           </Typography>
         </FormControl>
         <FormControl>
-          <TextField
-            {...register('contactPhone')}
+          <Controller
+            render={({ field }) => <TextField {...field} label="Phone" />}
+            name="contactPhone"
+            control={control}
             required
             type="tel"
             label="Phone"
-            name="contactPhone"
-            onChange={handleChange}
-            value={contactPhone}
           />
           <Typography
             variant="body2"

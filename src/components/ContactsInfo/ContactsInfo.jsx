@@ -19,7 +19,7 @@ export const ContactsInfo = () => {
   const filtredContacts = toFiltredContacts();
 
   return (
-    <List disablePadding sx={{maxWidth: '350px', marginRight: 'auto', marginLeft: 'auto'}}>
+    <List disablePadding sx={{maxWidth: '400px', marginRight: 'auto', marginLeft: 'auto'}}>
       {filtredContacts.map(contact => (
         <ContactInfo key={contact._id} {...contact} />
       ))}
